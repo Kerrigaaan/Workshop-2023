@@ -49,17 +49,11 @@ RUN rm -rf composer-setup.php
 
 # Installing Apache2
 RUN apk --no-cache add apache2 \
-    libxml2-dev \
-    apache2-utils
-
-# Configure FPM
-RUN mkdir -p /run/php/
-RUN touch /run/php/php8.2-fpm.id
-COPY .docker/php/php-fpm.conf /etc/php82/php-fpm.conf
-COPY .docker/php/php.ini-development /etc/php82/php.ini
+    apache2-proxy
 
 # Configure Apache2
 RUN mkdir -p /etc/apache2/sites-available/
+COPY .docker/apache2/httpd.conf /etc/apache2/httpd.conf
 COPY .docker/apache2/fuzhana.conf /etc/apache2/sites-available/fuzhana.conf
 
 # Configure supervisor
