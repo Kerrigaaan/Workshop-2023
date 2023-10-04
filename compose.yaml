@@ -4,7 +4,7 @@ services:
   db:
     image: mysql:latest
     container_name: fuzhana_db
-    hostname: fuzhana_db
+    hostname: root
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     environment:
