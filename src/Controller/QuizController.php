@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DTO\quizDTO;
+use App\DTO\QuizDTO;
 use App\Repository\Interfaces\QuizRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +59,7 @@ class QuizController extends AbstractController
     #[Route('/api/v1/quiz/{id}', methods: ['PUT'])]
     #[OA\Tag(name: 'quizz')]
     #[OA\RequestBody(required: true,
-        content: new OA\JsonContent(ref: new Model(type: quizDTO::class))
+        content: new OA\JsonContent(ref: new Model(type: QuizDTO::class))
     )]
     #[OA\Response(
         response: 200,
