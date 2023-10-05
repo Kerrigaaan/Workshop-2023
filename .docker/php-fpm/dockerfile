@@ -1,5 +1,9 @@
 FROM php:8-fpm
 
+RUN apt update
+
+RUN apt install -y curl git
+
 RUN usermod -u 1000 www-data
 RUN usermod -a -G www-data root
 RUN mkdir -p /var/www
