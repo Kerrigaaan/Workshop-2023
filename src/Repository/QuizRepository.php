@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DataTransformers\QuizEntityToQuizDTO;
 use App\DTO\quizDTO;
 use App\Entity\Quiz;
 use App\Repository\Interfaces\QuizRepositoryInterface;
@@ -25,20 +26,32 @@ class QuizRepository extends ServiceEntityRepository implements QuizRepositoryIn
 
     public function add(quizDTO $quiz): void
     {
+        // TODO: Faire l'ajout en BDD avec Doctrine
     }
 
-    public function findById(int $id): quizDTO
+    public function findById(int $id): ?quizDTO
     {
-        return new quizDTO([], null);
+        $quiz = $this->findOneBy(['id' => $id]);
+        return QuizEntityToQuizDTO::transformToDTO($quiz);
     }
 
     public function update(int $id, quizDTO $quizDTO): void
     {
+        $quiz = $this->findOneBy(['id' => $id]);
 
+        if (is_null($quiz)) return;
+        $quiz->setQuestionList($quizDTO->question_list);
+        $quiz->setActivateAt($quizDTO->activate_at);
+        $this->_em->flush();
     }
 
     public function delete(int $id): bool
     {
+        $quiz = $this->findOneBy(['id' => $id]);
+
+        if (is_null($quiz)) return false;
+        $this->_em->remove($quiz);
+        $this->_em->flush();
         return true;
     }
 }

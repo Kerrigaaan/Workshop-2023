@@ -44,18 +44,6 @@ class Quiz
         return $this->id;
     }
 
-    public function getQuestions(): array
-    {
-        return $this->questions;
-    }
-
-    public function setQuestions(array $questions): static
-    {
-        $this->questions = $questions;
-
-        return $this;
-    }
-
     public function getQuestionList(): array
     {
         return $this->question_list;

@@ -27,7 +27,7 @@ class QuizRepository implements QuizRepositoryInterface
         QuizRepository::$data[] = $quiz;
     }
 
-    public function findById(int $id): quizDTO
+    public function findById(int $id): ?quizDTO
     {
         if (0 <= $id && $id < count(QuizRepository::$data)) {
             $object = QuizRepository::$data[$id];

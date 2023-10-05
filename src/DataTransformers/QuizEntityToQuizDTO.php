@@ -7,8 +7,9 @@ use App\Entity\Quiz;
 
 class QuizEntityToQuizDTO
 {
-    public static function transformToDTO(Quiz $quiz): QuizDTO
+    public static function transformToDTO(?Quiz $quiz): ?QuizDTO
     {
-        return new QuizDTO($quiz->getQuestions(), $quiz->getActivateAt());
+        if (is_null($quiz)) return null;
+        return new QuizDTO($quiz->getQuestionList(), $quiz->getActivateAt());
     }
 }
