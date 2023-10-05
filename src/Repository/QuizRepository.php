@@ -37,8 +37,8 @@ class QuizRepository extends ServiceEntityRepository implements QuizRepositoryIn
 
     }
 
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
-
+        return true;
     }
 }

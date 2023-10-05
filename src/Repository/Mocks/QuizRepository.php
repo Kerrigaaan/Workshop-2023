@@ -43,11 +43,13 @@ class QuizRepository implements QuizRepositoryInterface
         }
     }
 
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         if (0 <= $id && $id < count(QuizRepository::$data)) {
             unset(QuizRepository::$data[$id]);
             QuizRepository::$data = array_values(QuizRepository::$data);
+            return true;
         }
+        return false;
     }
 }

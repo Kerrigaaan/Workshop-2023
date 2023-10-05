@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Attributes as OA;
 
 class QuizController extends AbstractController
 {
@@ -22,6 +24,15 @@ class QuizController extends AbstractController
     }
 
     #[Route('/api/v1/quiz/{id}', methods: ['GET'])]
+    #[OA\Tag(name: 'quizz')]
+    #[OA\Response(
+        response: 200,
+        description: "Returns a QuizDTO.",
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: QuizDTO::class))
+        )
+    )]
     public function GetQuiz(int $id): JsonResponse
     {
         $quiz = $this->quizRepository->findById($id);
@@ -31,11 +42,44 @@ class QuizController extends AbstractController
     }
 
     #[Route('/api/v1/quiz', methods: ['POST'])]
+    #[OA\Tag(name: 'quizz')]
+    #[OA\Response(
+        response: 200,
+        description: "Returns the validity of added quiz",
+    )]
     public function CreateQuiz(Request $request): JsonResponse
     {
         $jsonPayload = $request->getContent();
-        $quizDTO = $this->serializer->deserialize($jsonPayload, QuizDTO::class, 'json', []);
+        $quizDTO = $this->serializer->deserialize($jsonPayload, QuizDTO::class, 'json');
 
-        return new JsonResponse('success');
+        $this->quizRepository->add($quizDTO);
+        return new JsonResponse(["msg" => 'success']);
+    }
+
+    #[Route('/api/v1/quiz/{id}', methods: ['PUT'])]
+    #[OA\Tag(name: 'quizz')]
+    #[OA\RequestBody(required: true,
+        content: new OA\JsonContent(ref: new Model(type: quizDTO::class))
+    )]
+    #[OA\Response(
+        response: 200,
+        description: "Returns a success message for updated quiz entity.",
+    )]
+    public function UpdateQuiz(int $id): JsonResponse
+    {
+        return new JsonResponse(["msg" => 'success']);
+    }
+
+    #[Route('/api/v1/quiz/{id}', methods: ['DELETE'])]
+    #[OA\Tag(name: 'quizz')]
+    #[OA\Response(
+        response: 200,
+        description: "Returns a success message for deleted quiz entity.",
+    )]
+    public function DeleteQuiz(int $id): JsonResponse
+    {
+        $isSuccess = $this->quizRepository->delete($id);
+
+        return new JsonResponse(["msg" => $isSuccess ? 'success' : 'failed']);
     }
 }
