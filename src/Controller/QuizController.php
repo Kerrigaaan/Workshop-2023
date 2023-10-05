@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DTO\quizDTO;
 use App\Repository\Interfaces\QuizRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -27,5 +28,14 @@ class QuizController extends AbstractController
         $quizJSON = $this->serializer->serialize($quiz, 'json');
 
         return new JsonResponse($quizJSON);
+    }
+
+    #[Route('/api/v1/quiz', methods: ['POST'])]
+    public function CreateQuiz(Request $request): JsonResponse
+    {
+        $jsonPayload = $request->getContent();
+        $quizDTO = $this->serializer->deserialize($jsonPayload, QuizDTO::class, 'json', []);
+
+        return new JsonResponse('success');
     }
 }
