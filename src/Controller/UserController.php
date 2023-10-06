@@ -46,15 +46,31 @@ class UserController extends AbstractController
     #[OA\RequestBody(content: new OA\JsonContent(ref: new Model(type: UserDTO::class)))]
     #[OA\Response(
         response: 200,
-        description: "Returns the validity of added quiz",
+        description: "Returns if user has been created correctly",
     )]
-    public function Login(Request $request):JsonResponse
+    public function CreateUser(Request $request):JsonResponse
     {
         $jsonPayload = $request->getContent();
         $userDTO = $this->serializer->deserialize($jsonPayload, UserDTO::class, 'json');
 
         $isSuccess = $this->userRepository->createUser($userDTO);
         // TODO: Renvoyer un code erreur adapté
+        return new JsonResponse(["msg" => $isSuccess ? 'success' : 'failed']);
+    }
+
+    #[Route('/api/v1/user/login', methods: ['POST'])]
+    #[OA\Tag(name: 'user')]
+    #[OA\RequestBody(content: new OA\JsonContent(ref: new Model(type: UserDTO::class)))]
+    #[OA\Response(
+        response: 200,
+        description: "Returns if user has been logged",
+    )]
+    public function Login(Request $request):JsonResponse
+    {
+        $jsonPayload = $request->getContent();
+        $userDTO = $this->serializer->deserialize($jsonPayload, UserDTO::class, 'json');
+
+        $isSuccess = $this->userRepository->IsUserCredentialsValid($userDTO);
         return new JsonResponse(["msg" => $isSuccess ? 'success' : 'failed']);
     }
 }

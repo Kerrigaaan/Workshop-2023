@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -23,13 +24,25 @@ class User
     private ?string $salt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $created_at;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updated_at;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $deleted_at = null;
+    private ?\DateTimeImmutable $deleted_at;
+
+    /**
+     * @param int|null $id
+     */
+    public function __construct()
+    {
+        $dateNow = new DateTimeImmutable();
+
+        $this->created_at = $dateNow;
+        $this->updated_at = $dateNow;
+    }
+
 
     public function getId(): ?int
     {

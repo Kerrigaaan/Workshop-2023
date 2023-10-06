@@ -34,9 +34,9 @@ class Quiz
     {
         $dateNow = new DateTimeImmutable();
 
-        $activate_at = $activationDate ?? $dateNow;
-        $created_at = $dateNow;
-        $updated_at = $dateNow;
+        $this->activate_at = $activationDate ?? $dateNow;
+        $this->created_at = $dateNow;
+        $this->updated_at = $dateNow;
     }
 
     public function getId(): ?int
