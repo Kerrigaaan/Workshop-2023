@@ -7,8 +7,7 @@ use App\Repository\Interfaces\QuizRepositoryInterface;
 
 class QuizRepository implements QuizRepositoryInterface
 {
-    private static bool $needData = false;
-    private static array $data;
+    use MockingProperties;
 
     public function __construct()
     {
@@ -24,13 +23,13 @@ class QuizRepository implements QuizRepositoryInterface
 
     public function add(quizDTO $quiz): void
     {
-        QuizRepository::$data[] = $quiz;
+        self::$data[] = $quiz;
     }
 
     public function findById(int $id): ?quizDTO
     {
-        if (0 <= $id && $id < count(QuizRepository::$data)) {
-            $object = QuizRepository::$data[$id];
+        if (0 <= $id && $id < count(self::$data)) {
+            $object = self::$data[$id];
             return new quizDTO($object->question_list, $object->activate_at);
         }
         return new quizDTO([], null);
@@ -38,16 +37,16 @@ class QuizRepository implements QuizRepositoryInterface
 
     public function update(int $id, quizDTO $quizDTO): void
     {
-        if (0 <= $id && $id < count(QuizRepository::$data)) {
-            QuizRepository::$data[$id] = $quizDTO;
+        if (0 <= $id && $id < count(self::$data)) {
+            self::$data[$id] = $quizDTO;
         }
     }
 
     public function delete(int $id): bool
     {
-        if (0 <= $id && $id < count(QuizRepository::$data)) {
-            unset(QuizRepository::$data[$id]);
-            QuizRepository::$data = array_values(QuizRepository::$data);
+        if (0 <= $id && $id < count(self::$data)) {
+            unset(self::$data[$id]);
+            self::$data = array_values(self::$data);
             return true;
         }
         return false;

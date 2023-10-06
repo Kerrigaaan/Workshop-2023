@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\DTO\UserDTO;
 use App\Entity\User;
+use App\Repository\Interfaces\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -45,4 +47,29 @@ class UserRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function createUser(UserDTO $user): bool
+    {
+        $salt = random_bytes(32);
+        $entityUser = (new User())
+            ->setEmail($user->email)
+            ->setPassword(password_hash($user->password, PASSWORD_ARGON2ID, ['salt' => $salt]))
+            ->setSalt($salt);
+        $this->_em->persist($entityUser);
+        $this->_em->flush();
+    }
+
+    public function findUserById(int $id): ?UserDTO
+    {
+        $user = $this->findOneBy(['id' => $id]);
+        return UserEntityToUserDTO::transformToDTO($user);
+    }
+
+    public function IsUserCredentialsValid(UserDTO $user): bool
+    {
+        $u = $this->findOneBy(['email' => $user->email]);
+        if (is_null($u)) return false;
+        $hashedPassword = password_hash($user->password, PASSWORD_ARGON2ID, ['salt' => $u->getSalt()]);
+
+        return $hashedPassword === $u->getPassword();
+    }
 }

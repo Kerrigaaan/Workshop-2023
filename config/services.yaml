@@ -25,3 +25,4 @@ services:
 
     # Binding interface
     App\Repository\Interfaces\QuizRepositoryInterface: '@App\Repository\Mocks\QuizRepository'
+    App\Repository\Interfaces\UserRepositoryInterface: '@App\Repository\Mocks\UserRepository'

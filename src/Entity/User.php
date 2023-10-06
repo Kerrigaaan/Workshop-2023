@@ -20,7 +20,7 @@ class User
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $hash = null;
+    private ?string $salt = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -60,14 +60,14 @@ class User
         return $this;
     }
 
-    public function getHash(): ?string
+    public function getSalt(): ?string
     {
-        return $this->hash;
+        return $this->salt;
     }
 
-    public function setHash(string $hash): static
+    public function setSalt(string $salt): static
     {
-        $this->hash = $hash;
+        $this->salt = $salt;
 
         return $this;
     }
