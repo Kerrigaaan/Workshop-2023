@@ -26,7 +26,11 @@ class QuizRepository extends ServiceEntityRepository implements QuizRepositoryIn
 
     public function add(quizDTO $quiz): void
     {
-        // TODO: Faire l'ajout en BDD avec Doctrine
+        $entityQuiz = (new Quiz())
+            ->setQuestionList($quiz->question_list)
+            ->setActivateAt($quiz->activate_at);
+        $this->_em->persist($entityQuiz);
+        $this->_em->flush();
     }
 
     public function findById(int $id): ?quizDTO

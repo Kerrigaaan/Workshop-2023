@@ -43,6 +43,7 @@ class QuizController extends AbstractController
 
     #[Route('/api/v1/quiz', methods: ['POST'])]
     #[OA\Tag(name: 'quizz')]
+    #[OA\RequestBody(content: new OA\JsonContent(ref: new Model(type: QuizDTO::class)))]
     #[OA\Response(
         response: 200,
         description: "Returns the validity of added quiz",
