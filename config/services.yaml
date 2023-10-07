@@ -22,3 +22,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Binding interface
+#    App\Repository\Interfaces\QuizRepositoryInterface: '@App\Repository\Mocks\QuizRepository'
+    App\Repository\Interfaces\QuizRepositoryInterface: '@App\Repository\QuizRepository'
+#    App\Repository\Interfaces\UserRepositoryInterface: '@App\Repository\Mocks\UserRepository'
+    App\Repository\Interfaces\UserRepositoryInterface: '@App\Repository\UserRepository'

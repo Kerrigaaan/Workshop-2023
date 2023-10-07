@@ -2,15 +2,9 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/pup/phpContainer/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/pup/phpContainer/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/pup/phpContainer/tests" isTestSource="true" packagePrefix="App\Tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/pup/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/pup/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/pup/tests" isTestSource="true" packagePrefix="App\Tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="App\Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/pup/phpContainer/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/pup/phpContainer/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/pup/phpContainer/vendor/doctrine/collections" />
@@ -265,6 +259,9 @@
       <excludeFolder url="file://$MODULE_DIR$/pup/vendor/twig/extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/pup/vendor/twig/twig" />
       <excludeFolder url="file://$MODULE_DIR$/pup/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nelmio/api-doc-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/zircote/swagger-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
